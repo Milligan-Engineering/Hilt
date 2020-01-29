@@ -56,6 +56,7 @@ string assignEntry(int x)
 };
 int main()
 {
+	cout << "Welcome to H.I.L.T.: ";
 	string userAnswerClass,userAnswerAssignment,userAnswerDir;
 	//Store User input in variables
 	classEntry(j);
