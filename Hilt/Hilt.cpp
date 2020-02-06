@@ -1,5 +1,10 @@
 //H.I.L.T.
-//
+//Filename: hilt.cpp
+//Email Address: blkelly@my.milligan.edu
+//Term Project
+//Description: A tool to allow batch labelling of files in directory
+//Version 0.3
+//Last Changed: 2/6/2020
 #include <iostream>
 using namespace std;
 //Declaration of Variables
