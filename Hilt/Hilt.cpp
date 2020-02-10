@@ -35,6 +35,7 @@ int main()
 	}
 	//While loop to populate array with student names
 	int j = 0;
+	//will change this to a for loop
 	while (j < MAX_STUDENTS)
 	{
 		if (j == 0)
