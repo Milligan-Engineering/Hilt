@@ -3,17 +3,36 @@
 //Email Address: blkelly@my.milligan.edu
 //Term Project
 //Description: A tool to allow batch labelling of files in directory
-//Version 0.3
-//Last Changed: 2/6/2020
+//Version 0.4
+//Last Changed: 2/14/2020
 #include <iostream>
 using namespace std;
 //Declaration of Variables
 string className, assignmentName, fileDirectory;
 int numberStudents, numberAssignments, totalAssignments, fileLocation;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
 char userInput;
+//Declaration of Constants
 int const MAX_STUDENTS = 6;
 //Declaration of array
 string studentName[6];//Six is a placeholder value as it is the number of students EENG 221
+//Declartion of functions
+string studentNameInput() //Allows for student name inputs to be implemented outside of the main function
+{
+	for (int j = 0; j < MAX_STUDENTS; j++)
+	{
+		if (j == 0)
+		{
+			cout << "What is the first student's name?\n";
+			cin >> studentName[j];
+		}
+		else
+		{
+			cout << "What is the next students name?\n";
+			cin >> studentName[j];
+		}
+
+	}
+}
 int main()
 {
 	//Greeting Message.  Will likely be expanded to add some basic rules/instructions
@@ -34,20 +53,7 @@ int main()
 		cout << "There should be a total of " << totalAssignments << " files this semester for this class.\n";
 	}
 	//While loop to populate array with student names
-	for(int j=0;j<MAX_STUDENTS;j++)
-	{
-		if (j == 0)
-		{
-			cout << "What is the first student's name?\n";
-			cin >> studentName[j];
-		}
-		else
-		{
-			cout << "What is the next students name?\n";
-			cin >> studentName[j];
-		}
 
-	}
 	/*This is the section for the user to input the basic information for the labeler.  Text entry will likely not be the ideal input system, 
 	especially for file directory and class names, but should be relatively simple to get working and/or replace*/
 	//User inputs.  File directory will possibly be reworked into original file directory and the option to move the files while renaming them
@@ -77,10 +83,22 @@ int main()
 				cin >> fileDirectory;
 			}
 	}
-	cout << "What is the name of the class (using dashes or underscores for spaces)?\n";
-	cin >> className;
-	cout << "What assignment is this(using dashes or underscores for spaces)?\n";
-	cin >> assignmentName;
+	//Below are loops for the user to confirm the name of the class and the assignment
+	do
+	{
+		cout << "Please enter your desired class name (using dashes or underscores for spaces.)\n"; 
+		cin >> className;
+		cout << "Is this the correct class name?\n" << className << " \n";
+		cin >> userInput;
+	} while (userInput != 'y');
+	
+	do
+	{
+		cout << "Please enter what assignment this is (using dashes or underscores for spaces.)\n";
+		cin >> assignmentName;
+		cout << "Is this the correct assignment name?\n" << assignmentName << " \n";
+		cin >> userInput;
+	} while (userInput != 'y');
 	//Final output.
 	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << className << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
 	//I am just outputting to the console for now, but this will be changed to rename the files
