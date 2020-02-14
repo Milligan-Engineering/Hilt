@@ -10,7 +10,7 @@ using namespace std;
 //Declaration of Variables
 string className, assignmentName, fileDirectory;
 int numberStudents, numberAssignments, totalAssignments, fileLocation;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
-char userInput;
+char userInputNames, userInputClass,userInputAssignment, userInputCalc,UserInputDir;
 //Declaration of Constants
 int const MAX_STUDENTS = 6;
 //Declaration of array
@@ -31,7 +31,7 @@ string studentNameInput() //Allows for student name inputs to be implemented out
 			cin >> studentName[j];
 		}
 
-	}
+	}return "Ok";
 }
 int main()
 {
@@ -42,8 +42,8 @@ int main()
 	This feature could be reworked for checking to make sure that complete set of assignments have been turned-in/scanned at the end of the year,
 	but is unnessacary to the current proposed functionality of the program.  Any thoughts?*/
 	cout << "Would you like to get an estimate for the amount of files you will have at the end of the semester?\n Type y for yes or n for no\n";
-	cin >> userInput;
-	if (userInput == 'y')
+	cin >> userInputCalc;
+	if (userInputCalc == 'y')
 	{
 		cout << "How many students are in this class?\n";
 		cin >> numberStudents;
@@ -57,6 +57,17 @@ int main()
 	/*This is the section for the user to input the basic information for the labeler.  Text entry will likely not be the ideal input system, 
 	especially for file directory and class names, but should be relatively simple to get working and/or replace*/
 	//User inputs.  File directory will possibly be reworked into original file directory and the option to move the files while renaming them
+	cout << "Now is the time to enter student names into the class list:\n";
+	do
+	{
+		studentNameInput();
+		for (int k = 0; k < MAX_STUDENTS; k++)
+		{
+			cout << studentName[k] << "\n";
+		}
+		cout << "Are these names correct?";
+		cin >> userInputNames;
+	} while (userInputNames != 'y');
 	cout << "What directory do you want to rename files in?\n";
 	cout << "1:USB Drive\n";
 	cout << "2:Documents\n";
@@ -66,12 +77,12 @@ int main()
 	{
 		case 1:
 		{
-			fileDirectory = "F:\scannedFiles";
+			fileDirectory = "F:\\scannedFiles";
 			break;
 		}
 		case 2:
 		{
-			fileDirectory = "C:\Documents";
+			fileDirectory = "C:\\Documents";
 			break;
 		}
 		case 3:
@@ -89,16 +100,16 @@ int main()
 		cout << "Please enter your desired class name (using dashes or underscores for spaces.)\n"; 
 		cin >> className;
 		cout << "Is this the correct class name?\n" << className << " \n";
-		cin >> userInput;
-	} while (userInput != 'y');
+		cin >> userInputClass;
+	} while (userInputClass != 'y');
 	
 	do
 	{
 		cout << "Please enter what assignment this is (using dashes or underscores for spaces.)\n";
 		cin >> assignmentName;
 		cout << "Is this the correct assignment name?\n" << assignmentName << " \n";
-		cin >> userInput;
-	} while (userInput != 'y');
+		cin >> userInputAssignment;
+	} while (userInputAssignment != 'y');
 	//Final output.
 	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << className << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
 	//I am just outputting to the console for now, but this will be changed to rename the files
