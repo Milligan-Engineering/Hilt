@@ -9,7 +9,7 @@
 using namespace std;
 //Declaration of Variables
 string className, assignmentName, fileDirectory;
-int numberStudents, numberAssignments, totalAssignments;
+int numberStudents, numberAssignments, totalAssignments, fileLocation;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
 char userInput;
 int const MAX_STUDENTS = 6;
 //Declaration of array
@@ -34,8 +34,7 @@ int main()
 		cout << "There should be a total of " << totalAssignments << " files this semester for this class.\n";
 	}
 	//While loop to populate array with student names
-	int j = 0;
-	while (j < MAX_STUDENTS)
+	for(int j=0;j<MAX_STUDENTS;j++)
 	{
 		if (j == 0)
 		{
@@ -47,17 +46,36 @@ int main()
 			cout << "What is the next students name?\n";
 			cin >> studentName[j];
 		}
-		j++;
+
 	}
 	/*This is the section for the user to input the basic information for the labeler.  Text entry will likely not be the ideal input system, 
 	especially for file directory and class names, but should be relatively simple to get working and/or replace*/
 	//User inputs.  File directory will possibly be reworked into original file directory and the option to move the files while renaming them
 	cout << "What directory do you want to rename files in?\n";
-	cin >> fileDirectory;
-	while (fileDirectory != "test")
+	cout << "1:USB Drive\n";
+	cout << "2:Documents\n";
+	cout << "3:Custom Location\n";
+	cin >> fileLocation;
+	switch (fileLocation)
 	{
-		cout << "Sorry, " << fileDirectory << " is not a valid directory. \n";
-		cin >> fileDirectory;
+		case 1:
+		{
+			fileDirectory = "F:\scannedFiles";
+			break;
+		}
+		case 2:
+		{
+			fileDirectory = "C:\Documents";
+			break;
+		}
+		case 3:
+			cout << "What file directory do you want to read and write from?\n";
+			cin >> fileDirectory;
+			while (fileDirectory != "test")
+			{
+				cout << "Sorry, " << fileDirectory << " is not a valid directory. \n";
+				cin >> fileDirectory;
+			}
 	}
 	cout << "What is the name of the class (using dashes or underscores for spaces)?\n";
 	cin >> className;
@@ -66,12 +84,10 @@ int main()
 	//Final output.
 	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << className << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
 	//I am just outputting to the console for now, but this will be changed to rename the files
-	int i = 0;
 	cout << "Here are the file names:\n";
-	while (i < 6)
+	for(int i=0;i<MAX_STUDENTS;i++)
 	{
 		cout << fileDirectory << "\\" << className << "-" << assignmentName << "-" << studentName[i] << ".fileExtension\n";
-		i++;
 	}
 	return 0;
 };
