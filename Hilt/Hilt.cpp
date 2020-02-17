@@ -16,23 +16,7 @@ int const MAX_STUDENTS = 6;
 //Declaration of array
 string studentName[6];//Six is a placeholder value as it is the number of students EENG 221
 //Declartion of functions
-string studentNameInput() //Allows for student name inputs to be implemented outside of the main function
-{
-	for (int j = 0; j < MAX_STUDENTS; j++)
-	{
-		if (j == 0)
-		{
-			cout << "What is the first student's name?\n";
-			cin >> studentName[j];
-		}
-		else
-		{
-			cout << "What is the next students name?\n";
-			cin >> studentName[j];
-		}
-
-	}return "Ok";
-}
+string studentNameInput();
 int main()
 {
 	//Greeting Message.  Will likely be expanded to add some basic rules/instructions
@@ -119,4 +103,21 @@ int main()
 		cout << fileDirectory << "\\" << className << "-" << assignmentName << "-" << studentName[i] << ".fileExtension\n";
 	}
 	return 0;
-};
+}
+string studentNameInput() //Allows for student name inputs to be implemented outside of the main function
+{
+	for (int j = 0; j < MAX_STUDENTS; j++)
+	{
+		if (j == 0)
+		{
+			cout << "What is the first student's name?\n";
+			cin >> studentName[j];
+		}
+		else
+		{
+			cout << "What is the next students name?\n";
+			cin >> studentName[j];
+		}
+
+	}return "Ok";
+}
