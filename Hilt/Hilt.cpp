@@ -16,7 +16,9 @@ int const MAX_STUDENTS = 6;
 //Declaration of array
 string studentName[6];//Six is a placeholder value as it is the number of students EENG 221
 //Declartion of functions
-string studentNameInput();
+string studentNameInput();//Allows for the user to input student names.
+string validator(string input, string desiredInput);//Checks to make sure that the input is valid
+void confirmation(string nameOfInput,string userInput);
 int main()
 {
 	//Greeting Message.  Will likely be expanded to add some basic rules/instructions
@@ -72,28 +74,11 @@ int main()
 		case 3:
 			cout << "What file directory do you want to read and write from?\n";
 			cin >> fileDirectory;
-			while (fileDirectory != "test")
-			{
-				cout << "Sorry, " << fileDirectory << " is not a valid directory. \n";
-				cin >> fileDirectory;
-			}
+			validator(fileDirectory, "test");
 	}
 	//Below are loops for the user to confirm the name of the class and the assignment
-	do
-	{
-		cout << "Please enter your desired class name (using dashes or underscores for spaces.)\n"; 
-		cin >> className;
-		cout << "Is this the correct class name?\n" << className << " \n";
-		cin >> userInputClass;
-	} while (userInputClass != 'y');
-	
-	do
-	{
-		cout << "Please enter what assignment this is (using dashes or underscores for spaces.)\n";
-		cin >> assignmentName;
-		cout << "Is this the correct assignment name?\n" << assignmentName << " \n";
-		cin >> userInputAssignment;
-	} while (userInputAssignment != 'y');
+	confirmation("class", className);
+	confirmation("assignment", assignmentName);
 	//Final output.
 	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << className << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
 	//I am just outputting to the console for now, but this will be changed to rename the files
@@ -121,3 +106,25 @@ string studentNameInput() //Allows for student name inputs to be implemented out
 
 	}return "Ok";
 }
+string validator(string input, string desiredInput)
+{
+	while (input != desiredInput)
+	{
+		cout << "Sorry, but " << input << "is not a valid input.  Please try again:\n";
+		cin >> input;
+	}
+	return(input);
+}
+/*void confirmer(string nameOfInput, string userInput)
+{
+	char userConfirmation;
+	do
+	{
+		cout << "Please enter your desired " << nameOfInput << " name (using dashes or underscores for spaces.)\n";
+		cin >> userInput;
+		cout << "Is this the correct class name?\n" << nameOfInput << " \n";
+		cin >> userConfirmation;
+	} while (userConfirmation != 'y');
+	return;
+}
+*/
