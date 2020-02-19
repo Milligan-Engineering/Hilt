@@ -16,9 +16,9 @@ int const MAX_STUDENTS = 6;
 //Declaration of array
 string studentName[6];//Six is a placeholder value as it is the number of students EENG 221
 //Declartion of functions
-string studentNameInput();//Allows for the user to input student names.
+void studentNameInput();//Allows for the user to input student names.
 string validator(string input, string desiredInput);//Checks to make sure that the input is valid
-void confirmation(string nameOfInput,string userInput);
+string confirmer(string nameOfInput,string userInput);
 int main()
 {
 	//Greeting Message.  Will likely be expanded to add some basic rules/instructions
@@ -77,8 +77,8 @@ int main()
 			validator(fileDirectory, "test");
 	}
 	//Below are loops for the user to confirm the name of the class and the assignment
-	confirmation("class", className);
-	confirmation("assignment", assignmentName);
+	className = confirmer("class", className);
+	assignmentName = confirmer("assignment", assignmentName);
 	//Final output.
 	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << className << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
 	//I am just outputting to the console for now, but this will be changed to rename the files
@@ -89,7 +89,8 @@ int main()
 	}
 	return 0;
 }
-string studentNameInput() //Allows for student name inputs to be implemented outside of the main function
+//Function Definition
+void studentNameInput() //Allows for student name inputs to be implemented outside of the main function
 {
 	for (int j = 0; j < MAX_STUDENTS; j++)
 	{
@@ -104,7 +105,7 @@ string studentNameInput() //Allows for student name inputs to be implemented out
 			cin >> studentName[j];
 		}
 
-	}return "Ok";
+	}return;
 }
 string validator(string input, string desiredInput)
 {
@@ -115,16 +116,15 @@ string validator(string input, string desiredInput)
 	}
 	return(input);
 }
-/*void confirmer(string nameOfInput, string userInput)
+string confirmer(string nameOfInput, string userInput)
 {
 	char userConfirmation;
 	do
 	{
 		cout << "Please enter your desired " << nameOfInput << " name (using dashes or underscores for spaces.)\n";
 		cin >> userInput;
-		cout << "Is this the correct class name?\n" << nameOfInput << " \n";
+		cout << "Is this the correct class name?\n" << userInput << " \n";
 		cin >> userConfirmation;
 	} while (userConfirmation != 'y');
-	return;
+	return userInput;
 }
-*/
