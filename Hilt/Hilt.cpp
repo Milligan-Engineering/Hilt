@@ -3,8 +3,8 @@
 //Email Address: blkelly@my.milligan.edu
 //Term Project
 //Description: A tool to allow batch labelling of files in directory
-//Version 0.4
-//Last Changed: 2/14/2020
+//Version 0.5
+//Last Changed: 2/20/2020
 #include <iostream>
 using namespace std;
 //Declaration of Variables
