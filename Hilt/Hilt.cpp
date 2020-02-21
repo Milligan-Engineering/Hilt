@@ -9,16 +9,20 @@
 using namespace std;
 //Declaration of Variables
 string className, assignmentName, fileDirectory;
-int numberStudents, numberAssignments, totalAssignments, fileLocation;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
-char userInputNames, userInputClass,userInputAssignment, userInputCalc,UserInputDir;
+int numberStudents, numberAssignments, totalAssignments, fileLocation, classIndication;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
+char userInputNames, userInputClass,userInputAssignment, userInputCalc,UserInputDir;//Variables for single character user inputs
 //Declaration of Constants
-int const MAX_STUDENTS = 6;
-//Declaration of array
+int const MAX_STUDENTS = 40;//Originally 6, using 40 to allow testing of larger classes
+//Declaration of arrays
 string studentName[6];//Six is a placeholder value as it is the number of students EENG 221
+string classOne[6];//Sample classes(currently not used as studentName is handling its duties at this point, but will be used within the next version or two
+string classTwo[28];
+string classOneFiles[6];//Array with files to rename.
+string classTwoFiles[28];
 //Declartion of functions
-void studentNameInput();//Allows for the user to input student names.
-string validator(string input, string desiredInput);//Checks to make sure that the input is valid
-string confirmer(string nameOfInput,string userInput);
+void studentNameInput();//Allows for the user to input student names.  
+string validator(string input, string desiredInput);//You input a input and desired input and the function checks whether they are equivalent
+string confirmer(string nameOfInput,string userInput);//Allows for the user to confirm that their input is the correct one for the which input setting
 int main()
 {
 	//Greeting Message.  Will likely be expanded to add some basic rules/instructions
@@ -27,12 +31,13 @@ int main()
 	Likely will not last longterm or will be moved to more approriate part of the program. 
 	This feature could be reworked for checking to make sure that complete set of assignments have been turned-in/scanned at the end of the year,
 	but is unnessacary to the current proposed functionality of the program.  Any thoughts?*/
+	cout << "How many students are in this class?\n";
+	cin >> numberStudents;
 	cout << "Would you like to get an estimate for the amount of files you will have at the end of the semester?\n Type y for yes or n for no\n";
 	cin >> userInputCalc;
+	userInputCalc = tolower(userInputCalc);
 	if (userInputCalc == 'y')
 	{
-		cout << "How many students are in this class?\n";
-		cin >> numberStudents;
 		cout << "How many assignments per student?\n";
 		cin >> numberAssignments;
 		totalAssignments = numberAssignments * numberStudents;
@@ -47,12 +52,14 @@ int main()
 	do
 	{
 		studentNameInput();
-		for (int k = 0; k < MAX_STUDENTS; k++)
+		cout << "\n###################################\n Student Names:\n";//Adds a dividing line from the last user input and the computers output
+		for (int k = 0; k < MAX_STUDENTS && k < numberStudents; k++)
 		{
 			cout << studentName[k] << "\n";
 		}
 		cout << "Are these names correct?";
 		cin >> userInputNames;
+		userInputNames = tolower(userInputNames);
 	} while (userInputNames != 'y');
 	cout << "What directory do you want to rename files in?\n";
 	cout << "1:USB Drive\n";
@@ -78,21 +85,42 @@ int main()
 	}
 	//Below are loops for the user to confirm the name of the class and the assignment
 	className = confirmer("class", className);
+	cout << "Is this Class 1 or Class 2?(Please enter the number)";
+	cin >> classIndication;
 	assignmentName = confirmer("assignment", assignmentName);
 	//Final output.
 	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << className << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
 	//I am just outputting to the console for now, but this will be changed to rename the files
 	cout << "Here are the file names:\n";
-	for(int i=0;i<MAX_STUDENTS;i++)
+	switch (classIndication)
 	{
-		cout << fileDirectory << "\\" << className << "-" << assignmentName << "-" << studentName[i] << ".fileExtension\n";
+	case 1:
+	{
+		for (int i = 0; i < MAX_STUDENTS && i < numberStudents; i++)
+		{
+			classOneFiles[i] = fileDirectory + "\\" + className + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";
+			cout << classOneFiles[i];
+		}
+		break;
 	}
+	case 2:
+	{
+		for (int i = 0; i < MAX_STUDENTS && i < numberStudents; i++)
+		{
+			classTwoFiles[i] = fileDirectory + "\\" + className + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";
+			cout << classTwoFiles[i];
+		}
+		break;
+	}
+	}
+
 	return 0;
+
 }
 //Function Definition
 void studentNameInput() //Allows for student name inputs to be implemented outside of the main function
 {
-	for (int j = 0; j < MAX_STUDENTS; j++)
+	for (int j = 0; j < MAX_STUDENTS && j < numberStudents; j++)
 	{
 		if (j == 0)
 		{
@@ -123,8 +151,9 @@ string confirmer(string nameOfInput, string userInput)
 	{
 		cout << "Please enter your desired " << nameOfInput << " name (using dashes or underscores for spaces.)\n";
 		cin >> userInput;
-		cout << "Is this the correct class name?\n" << userInput << " \n";
+		cout << "Is this the correct " << nameOfInput<<" name?\n" << userInput << " \n";
 		cin >> userConfirmation;
+		userConfirmation = tolower(userConfirmation);
 	} while (userConfirmation != 'y');
 	return userInput;
 }
