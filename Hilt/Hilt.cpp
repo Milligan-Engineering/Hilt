@@ -98,7 +98,7 @@ int main()
 		{
 			for (int i = 0; i < MAX_STUDENTS && i < numberStudents; i++)
 			{
-				classOneFiles[i] = fileDirectory + "\\" + className + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";
+				classOneFiles[i] = fileDirectory + "\\" + className + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
 				cout << classOneFiles[i];
 			}
 			break;
