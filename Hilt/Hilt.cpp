@@ -22,7 +22,7 @@ string classTwoFiles[28];//Do not have names for this group of files
 //Declartion of functions
 void studentNameInput();//Allows for the user to input student names.  
 string validator(string input, string desiredInput);
-//Precondition: String you want to check and desired string/characters as strings
+//Precondition: String you want to check and desired string/characters to compare against
 //Post-Condition: The function compares the two and returns the user input when they are the same as a string
 string confirmer(string nameOfInput,string userInput);
 //Precondition: What input you need to the user to confirm and what it is called in the program, where the userInput is a string and the name of the variable with type string
