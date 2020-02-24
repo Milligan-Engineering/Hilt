@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 //Declaration of Variables
-string className, assignmentName, fileDirectory;
+string className, assignmentName, fileDirectory, termName;
 int numberStudents, numberAssignments, totalAssignments, fileLocation, classIndication;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
 char userInputNames, userInputClass,userInputAssignment, userInputCalc,UserInputDir;//Variables for single character user inputs
 //Declaration of Constants
@@ -31,6 +31,7 @@ int main()
 	Likely will not last longterm or will be moved to more approriate part of the program. 
 	This feature could be reworked for checking to make sure that complete set of assignments have been turned-in/scanned at the end of the year,
 	but is unnessacary to the current proposed functionality of the program.  Any thoughts?*/
+	termName = "Spring_2020";//Will be replaced with a user input in next version
 	cout << "How many students are in this class?\n";
 	cin >> numberStudents;
 	cout << "Would you like to get an estimate for the amount of files you will have at the end of the semester?\n Type y for yes or n for no\n";
@@ -98,7 +99,7 @@ int main()
 		{
 			for (int i = 0; i < MAX_STUDENTS && i < numberStudents; i++)
 			{
-				classOneFiles[i] = fileDirectory + "\\" + className + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
+				classOneFiles[i] = fileDirectory + "\\" + className + "-" + termName +"-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
 				cout << classOneFiles[i];
 			}
 			break;
@@ -107,7 +108,7 @@ int main()
 		{
 			for (int i = 0; i < MAX_STUDENTS && i < numberStudents; i++)
 			{
-				classTwoFiles[i] = fileDirectory + "\\" + className + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";
+				classTwoFiles[i] = fileDirectory + "\\" + className + "-" + termName+ "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";
 				cout << classTwoFiles[i];
 			}
 			break;
