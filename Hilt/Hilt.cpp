@@ -4,7 +4,7 @@
 //Term Project
 //Description: A tool to allow batch labelling of files in directory
 //Version 0.5
-//Last Changed: 2/20/2020
+//Last Changed: 2/24/2020
 #include <iostream>
 using namespace std;
 //Declaration of Variables
@@ -18,11 +18,15 @@ string studentName[6];//Six is a placeholder value as it is the number of studen
 string classOne[6];//Sample classes(currently not used as studentName is handling its duties at this point, but will be used within the next version or two
 string classTwo[28];
 string classOneFiles[6] = {"Q12_001", "Q12_002","Q12_003", "Q12_004" "Q12_005", "Q12_006","Q12_007" };//Array with files to rename.
-string classTwoFiles[28];
+string classTwoFiles[28];//Do not have names for this group of files
 //Declartion of functions
 void studentNameInput();//Allows for the user to input student names.  
-string validator(string input, string desiredInput);//You input a input and desired input and the function checks whether they are equivalent
-string confirmer(string nameOfInput,string userInput);//Allows for the user to confirm that their input is the correct one for the which input setting
+string validator(string input, string desiredInput);
+//Precondition: String you want to check and desired string/characters as strings
+//Post-Condition: The function compares the two and returns the user input when they are the same as a string
+string confirmer(string nameOfInput,string userInput);
+//Precondition: What input you need to the user to confirm and what it is called in the program, where the userInput is a string and the name of the variable with type string
+//Post-Condition: Returns the confirmed user input as a string.
 int main()
 {
 	//Greeting Message.  Will likely be expanded to add some basic rules/instructions
