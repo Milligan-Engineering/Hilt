@@ -35,7 +35,8 @@ int main()
 	Likely will not last longterm or will be moved to more approriate part of the program. 
 	This feature could be reworked for checking to make sure that complete set of assignments have been turned-in/scanned at the end of the year,
 	but is unnessacary to the current proposed functionality of the program.  Any thoughts?*/
-	termName = "Spring_2020";//Will be replaced with a user input in next version
+	cout << "What term are we in?";
+	cin >> termName;//Will hopefuully be embedded into class list files.
 	cout << "How many students are in this class?\n";
 	cin >> numberStudents;
 	cout << "Would you like to get an estimate for the amount of files you will have at the end of the semester?\n Type y for yes or n for no\n";
