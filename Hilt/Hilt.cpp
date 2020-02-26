@@ -35,7 +35,7 @@ int main()
 	Likely will not last longterm or will be moved to more approriate part of the program. 
 	This feature could be reworked for checking to make sure that complete set of assignments have been turned-in/scanned at the end of the year,
 	but is unnessacary to the current proposed functionality of the program.  Any thoughts?*/
-	cout << "What term are we in?";
+	cout << "What term are we in?\n";
 	cin >> termName;//Will hopefuully be embedded into class list files.
 	cout << "How many students are in this class?\n";
 	cin >> numberStudents;
