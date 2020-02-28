@@ -3,8 +3,8 @@
 //Email Address: blkelly@my.milligan.edu
 //Term Project
 //Description: A tool to allow batch labelling of files in directory
-//Version 0.5
-//Last Changed: 2/24/2020
+//Version 0.6
+//Last Changed: 2/28/2020
 #include <iostream>
 using namespace std;
 //Declaration of Variables
@@ -17,8 +17,9 @@ int const MAX_STUDENTS = 40;//Originally 6, using 40 to allow testing of larger 
 string studentName[6];//Six is a placeholder value as it is the number of students EENG 221
 string classOne[6];//Sample classes(currently not used as studentName is handling its duties at this point, but will be used within the next version or two
 string classTwo[28];
-string classOneFiles[6] = {"Q12_001", "Q12_002","Q12_003", "Q12_004" "Q12_005", "Q12_006","Q12_007" };//Array with files to rename.
-string classTwoFiles[28];//Do not have names for this group of files
+string classOneFiles[MAX_STUDENTS] = {"Q12_001", "Q12_002","Q12_003", "Q12_004" "Q12_005", "Q12_006","Q12_007" };//Array with files to rename.
+//Since I am currently just renaming the array elements without using the data contained in a meaningful way, I simply populated classTwofiles with random strings(the synonyms of amazing)
+string classTwoFiles[MAX_STUDENTS] = { "astonishing", "astounding", "blindsiding", "dumbfounding", "eye-opening", "flabbergasting", "jarring", "jaw-dropping", "jolting", "shocking", "startling", "stunning", "stupefying", "surprising" };//Will enter actual represenative strings after confirming the structure
 //Declartion of functions
 void studentNameInput();//Allows for the user to input student names.  
 string validator(string input, string desiredInput);
