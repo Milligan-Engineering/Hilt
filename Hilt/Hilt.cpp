@@ -4,17 +4,19 @@
 //Term Project
 //Description: A tool to allow batch labelling of files in directory
 //Version 0.6
-//Last Changed: 2/28/2020
+//Last Changed: 3/4/2020
 #include <iostream>
+#include<fstream>
+//#include "C:\Users\weasa\source\repos\fast-cpp-csv-parser\csv.h"
 using namespace std;
 //Declaration of Variables
-string className, assignmentName, fileDirectory, termName;
+string className, assignmentName, fileDirectory, termName, classFileName;
 int numberStudents, numberAssignments, totalAssignments, fileLocation, classIndication;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
 char userInputNames, userInputClass,userInputAssignment, userInputCalc,UserInputDir;//Variables for single character user inputs
 //Declaration of Constants
 int const MAX_STUDENTS = 40;//Originally 6, using 40 to allow testing of larger classes
 //Declaration of arrays
-string studentName[6];//Six is a placeholder value as it is the number of students EENG 221
+string studentName[3];//Six is a placeholder value as it is the number of students EENG 221
 string classOne[6];//Sample classes(currently not used as studentName is handling its duties at this point, but will be used within the next version or two
 string classTwo[28];
 string classOneFiles[MAX_STUDENTS] = {"Q12_001", "Q12_002","Q12_003", "Q12_004" "Q12_005", "Q12_006","Q12_007" };//Array with files to rename.
@@ -55,7 +57,7 @@ int main()
 	/*This is the section for the user to input the basic information for the labeler.  Text entry will likely not be the ideal input system, 
 	especially for file directory and class names, but should be relatively simple to get working and/or replace*/
 	//User inputs.  File directory will possibly be reworked into original file directory and the option to move the files while renaming them
-	cout << "Now is the time to enter student names into the class list:\n";
+	/*cout << "Now is the time to enter student names into the class list:\n";
 	do
 	{
 		studentNameInput();
@@ -67,7 +69,8 @@ int main()
 		cout << "Are these names correct?\n";
 		cin >> userInputNames;
 		userInputNames = tolower(userInputNames);
-	} while (userInputNames != 'y');
+	} while (userInputNames != 'y');*/
+
 	cout << "What directory do you want to rename files in?\n";
 	cout << "1:USB Drive\n";
 	cout << "2:Documents\n";
@@ -92,6 +95,23 @@ int main()
 	}
 	//Below are loops for the user to confirm the name of the class and the assignment
 	className = confirmer("class", className);
+	//classFileName = className + ".csv";
+	ifstream classFile;
+	classFile.open("Class.txt");
+	if (classFile.fail())
+	{
+		cout << "\nOpening class file failed\n";
+		exit(1);
+	}
+	int count = 0;
+	string next;
+	while (classFile >> next)
+	{
+		
+		studentName[count] = next;
+		count++;
+	}
+	classFile.close();
 	cout << "Is this Class 1 or Class 2? (Please enter the number)\n";
 	cin >> classIndication;
 	assignmentName = confirmer("assignment", assignmentName);
@@ -99,6 +119,13 @@ int main()
 	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << className << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
 	//I am just outputting to the console for now, but this will be changed to rename the files
 	cout << "Here are the file names:\n";
+	ofstream newFileName;
+	newFileName.open("fileNames.txt");
+	if (newFileName.fail())
+	{
+		cout << "\nOpening file name file failed\n";
+		exit(1);
+	}
 	switch (classIndication)
 	{
 		case 1:
@@ -107,16 +134,20 @@ int main()
 			{
 				classOneFiles[i] = fileDirectory + "\\" + className + "-" + termName +"-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
 				cout << classOneFiles[i];
+				newFileName << fileDirectory + "\\" + className + "-" + termName + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
+				cout << classOneFiles[i] << endl;
 			}
+			newFileName.close();
 			break;
 		}
 		case 2:
 		{
 			for (int i = 0; i < MAX_STUDENTS && i < numberStudents; i++)
 			{
-				classTwoFiles[i] = fileDirectory + "\\" + className + "-" + termName+ "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";
-				cout << classTwoFiles[i];
+				newFileName << fileDirectory + "\\" + className + "-" + termName + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
+				cout << classOneFiles[i] << endl;
 			}
+			newFileName.close();
 			break;
 		}
 	}
