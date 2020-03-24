@@ -195,3 +195,14 @@ string confirmer(string nameOfInput, string userInput)
 	} while (userConfirmation != 'y');
 	return userInput;
 }
+void csvParser(string fileName)
+{
+	char currentChar;
+	ifstream dataFile;
+	dataFile.open(fileName);
+	dataFile.get(currentChar);
+	while ((currentChar != ',') && (currentChar != '\n'));
+	{
+
+	}
+}
