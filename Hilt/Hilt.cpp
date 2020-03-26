@@ -3,7 +3,7 @@
 //Email Address: blkelly@my.milligan.edu
 //Term Project
 //Description: A tool to allow batch labelling of files in directory
-//Version 0.8
+//Version 0.8.1
 //Last Changed: 3/25/2020
 #include <iostream>
 #include<fstream>
