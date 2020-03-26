@@ -10,9 +10,11 @@
 //#include "C:\Users\weasa\source\repos\fast-cpp-csv-parser\csv.h"
 using namespace std;
 //Declaration of Variables
-string className, assignmentName, fileDirectory, termName, classFileName;
+string /*className,*/ assignmentName, fileDirectory, termName, classFileName;
 int numberStudents, numberAssignments, totalAssignments, fileLocation, classIndication;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
 char userInputNames, userInputClass,userInputAssignment, userInputCalc,UserInputDir;//Variables for single character user inputs
+//Declartion of a C-String for class Name
+char className[100];
 //Declaration of Constants
 int const MAX_STUDENTS = 40;//Originally 6, using 40 to allow testing of larger classes
 //Declaration of arrays
@@ -113,8 +115,12 @@ int main()
 			validator(fileDirectory, "test");
 	}
 	//Below are loops for the user to confirm the name of the class and the assignment
-	className = confirmer("class", className);
-	//classFileName = className + ".csv";
+	//className = confirmer("class", className);
+	cout << "Class Name please? Use return to stop input\n";
+	cout << "Class name:";
+	cin.ignore();
+	cin.getline(className,100);
+	classFileName =  "test.csv";
 	ifstream classFile;
 	classFile.open("Class.txt");
 	if (classFile.fail())
