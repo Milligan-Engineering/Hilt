@@ -3,8 +3,8 @@
 //Email Address: blkelly@my.milligan.edu
 //Term Project
 //Description: A tool to allow batch labelling of files in directory
-//Version 0.7
-//Last Changed: 3/4/2020
+//Version 0.8
+//Last Changed: 3/25/2020
 #include <iostream>
 #include<fstream>
 //#include "C:\Users\weasa\source\repos\fast-cpp-csv-parser\csv.h"
@@ -25,6 +25,13 @@ string classTwoFiles[MAX_STUDENTS] = { "astonishing", "astounding", "blindsiding
 //Declartion of functions
 void studentNameInput();//Allows for the user to input student names.  
 string validator(string input, string desiredInput);
+//Preconditon: The input of you want the user to enter
+//Postconditon: A validated input from the user will be stored in the input entered
+void inputChecker(string input);
+void inputChecker(int input);
+void inputChecker(double input);
+void inputChecker(bool input);
+void inputChecker(char input);
 //Precondition: String you want to check and desired string/characters to compare against
 //Post-Condition: The function compares the two and returns the user input when they are the same as a string
 string confirmer(string nameOfInput,string userInput);
@@ -39,11 +46,14 @@ int main()
 	This feature could be reworked for checking to make sure that complete set of assignments have been turned-in/scanned at the end of the year,
 	but is unnessacary to the current proposed functionality of the program.  Any thoughts?*/
 	cout << "What term are we in?\n";
-	cin >> termName;//Will hopefuully be embedded into class list files.
+	//cin >> termName;//Will hopefuully be embedded into class list files.
+	inputChecker(termName);		
 	cout << "How many students are in this class?\n";
-	cin >> numberStudents;
-	cout << "Would you like to get an estimate for the amount of files you will have at the end of the semester?\n Type y for yes or n for no\n";
-	cin >> userInputCalc;
+	//cin >> numberStudents;
+	inputChecker(numberStudents);
+	cout << "Would you like to get an estimate for the amount of files you will have at the end of the semester?\n Type y for yes or any other letter for no\n";
+	//cin >> userInputCalc;
+	inputChecker(userInputCalc);
 	userInputCalc = tolower(userInputCalc);
 	if (userInputCalc == 'y')
 	{
@@ -70,12 +80,21 @@ int main()
 		cin >> userInputNames;
 		userInputNames = tolower(userInputNames);
 	} while (userInputNames != 'y');*/
-
-	cout << "What directory do you want to rename files in?\n";
-	cout << "1:USB Drive\n";
-	cout << "2:Documents\n";
-	cout << "3:Custom Location\n";
-	cin >> fileLocation;
+	int l = 0;
+	do {
+		if (l > 0)
+		{
+			"Sorry that is an invalid input, please try again.\n";
+			cin.clear();
+			cin.ignore();
+		}
+		cout << "What directory do you want to rename files in?\n";
+		cout << "1:USB Drive\n";
+		cout << "2:Documents\n";
+		cout << "3:Custom Location\n";
+		cin >> fileLocation;
+		l++;
+	} while (cin.fail());
 	switch (fileLocation)
 	{
 		case 1:
@@ -113,7 +132,8 @@ int main()
 	}
 	classFile.close();
 	cout << "Is this Class 1 or Class 2? (Please enter the number)\n";
-	cin >> classIndication;
+	//cin >> classIndication;
+	inputChecker(classIndication);
 	assignmentName = confirmer("assignment", assignmentName);
 	//Final output.
 	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << className << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
@@ -201,8 +221,90 @@ void csvParser(string fileName)
 	ifstream dataFile;
 	dataFile.open(fileName);
 	dataFile.get(currentChar);
+	if (dataFile.fail())
+	{
+		cout << "\nOpening class data file failed\n";
+		exit(1);
+	}
+	ofstream nameList;
+	nameList.open("names.txt");
+	if (nameList.fail())
+	{
+		cout << "\nCreating name file failed\n";
+		exit(1);
+	}
 	while ((currentChar != ',') && (currentChar != '\n'));
 	{
 
+	}
+}
+void inputChecker(string input)
+{
+	cin >> input;
+	cout << cin.fail()<<endl;
+	while (cin.fail())
+	{
+		cin >> input;
+		//cout << cin.fail() << endl;
+		cin.clear();
+		cin.ignore();
+		cout << "Sorry but that input is not valid, please use the requested input type\n";
+		cin >> input;
+	}
+}
+void inputChecker(int input)
+{
+	cin >> input;
+	cout << cin.fail()<<endl;
+	while (cin.fail())
+	{
+		cin >> input;
+		//cout << cin.fail() << endl;
+		cin.clear();
+		cin.ignore();
+		cout << "Sorry but that input is not valid, please use the requested input type\n";
+		cin >> input;
+	}
+}
+void inputChecker(double input)
+{
+	cin >> input;
+	cout << cin.fail()<<endl;
+	while (cin.fail())
+	{
+		cin >> input;
+		//cout << cin.fail() << endl;
+		cin.clear();
+		cin.ignore();
+		cout << "Sorry but that input is not valid, please use the requested input type\n";
+		cin >> input;
+	}
+}
+void inputChecker(bool input)
+{
+	cin >> input;
+	cout << cin.fail()<<endl;
+	while (cin.fail())
+	{
+		cin >> input;
+		//cout << cin.fail() << endl;
+		cin.clear();
+		cin.ignore();
+		cout << "Sorry but that input is not valid, please use the requested input type\n";
+		cin >> input;
+	}
+}
+void inputChecker(char input)
+{
+	cin >> input;
+	cout << cin.fail()<<endl;
+	while (cin.fail())
+	{
+		cin >> input;
+		//cout << cin.fail() << endl;
+		cin.clear();
+		cin.ignore();
+		cout << "Sorry but that input is not valid, please use the requested input type\n";
+		cin >> input;
 	}
 }
