@@ -38,11 +38,11 @@ char inputChecker(char input);
 //Postconditon: A validated input from the user will be stored in the input entered
 void colorChanger(int colorNumber);
 //Precondition: Place the number of the color you want the following text to be.
-//Postconditon:The output color is changed
+//Postconditon:The output color is changed for the following text until it is changed again.
 
 string confirmer(string nameOfInput,string userInput);
 //Precondition: What input you need to the user to confirm and what it is called in the program, where the userInput is a string and the name of the variable with type string
-//Post-Condition: Returns the confirmed user input as a string.
+//Postcondition: Returns the confirmed user input as a string.
 int main()
 {
 	//Greeting Message.  Will likely be expanded to add some basic rules/instructions
