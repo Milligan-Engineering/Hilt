@@ -185,8 +185,8 @@ int main()
 		{
 			if (testStorage[p] != -1)
 			{
-				cout << testStorage[p]<<"\n";
-				cout << p<< "\n";
+				cout << "Index #:" << testStorage[p]<<"\n";
+				//cout << p<< "\n";
 				arrayMatches++;
 			}
 			if (p == 9)
