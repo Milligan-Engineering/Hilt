@@ -178,9 +178,9 @@ int main()
 	{
 		cout << "What is the student's name?\n";
 		cin.ignore();
-		cin;
-		cin.getline(searchTerm, 100);
+		cin.getline(searchTerm, 100,'\n');
 		arraySearch(studentName, 10, searchTerm, testStorage, 10);
+		arrayMatches = 0;
 		for (int p = 0; p < 10; p++)
 		{
 			if (testStorage[p] != -1)
@@ -205,7 +205,7 @@ int main()
 		cout << "Would you like to find another student? Any other input than y or Y will exit this routine\n";
 		//cin.ignore();
 		cin >> userInputSearch;
-		cin.ignore();
+		//cin.ignore();
 	}
 	colorChanger(15);
 	cout << "Is this Class 1 or Class 2? (Please enter the number)\n";
