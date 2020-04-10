@@ -3,8 +3,8 @@
 //Email Address: blkelly@my.milligan.edu
 //Term Project
 //Description: A tool to allow batch labelling of files in directory
-//Version 0.8.2a
-//Last Changed: 4/7/2020
+//Version 0.8.3
+//Last Changed: 4/9/2020
 #include<iostream>
 #include<fstream>
 #include<Windows.h>
@@ -22,6 +22,7 @@ int const MAX_STUDENTS = 100;//Originally 6, using 40 to allow testing of larger
 string studentName[MAX_STUDENTS];//Six is a placeholder value as it is the number of students EENG 221
 string classOne[MAX_STUDENTS];//Sample classes(currently not used as studentName is handling its duties at this point, but will be used within the next version or two
 string classTwo[MAX_STUDENTS];
+int present[MAX_STUDENTS][1];//The 'x' axis is the students number and the 'y' axis is whether they were there or not.
 string classOneFiles[MAX_STUDENTS] = {"Q12_001", "Q12_002","Q12_003", "Q12_004" "Q12_005", "Q12_006","Q12_007" };//Array with files to rename.
 //Since I am currently just renaming the array elements without using the data contained in a meaningful way, I simply populated classTwofiles with random strings(the synonyms of amazing)
 string classTwoFiles[MAX_STUDENTS] = { "astonishing", "astounding", "blindsiding", "dumbfounding", "eye-opening", "flabbergasting", "jarring", "jaw-dropping", "jolting", "shocking", "startling", "stunning", "stupefying", "surprising" };//Will enter actual represenative strings after confirming the structure
@@ -61,11 +62,13 @@ int main()
 	colorChanger(10);
 	//cin >> termName;//Will hopefuully be embedded into class list files.
 	cin.getline(termName, 1000000);
-	colorChanger(15);
-	cout << "How many students are in this class? \n(Numbers greater than 100 WILL break the program with the current class list, you can edit Class.txt to up the limit)\n";
-	//cin >> numberStudents;
-	colorChanger(10);
-	numberStudents = inputChecker(numberStudents);
+	do {
+		colorChanger(15);
+		cout << "How many students are in this class? \n(Numbers greater than 100 WILL break the program with the current class list, you can edit Class.txt to up the limit and will loop this input step until a number less than 100 is entered.)\n";
+		//cin >> numberStudents;
+		colorChanger(10);
+		numberStudents = inputChecker(numberStudents);
+	} while (numberStudents > 100);
 	colorChanger(15);
 	cout << "Would you like to get an estimate for the amount of files you will have at the end of the semester?\n Type y for yes or any other letter for no\n";
 	//cin >> userInputCalc;
@@ -206,6 +209,19 @@ int main()
 		//cin.ignore();
 		cin >> userInputSearch;
 		//cin.ignore();
+	}
+	for (l = 0; l < numberStudents; l++)//injests whether a student was present or not.
+	{
+		cout << "What is the students number\n";
+		cin >> present[l][0];
+		cout << "Was this student present? 1 for yes and 0 for no\n";
+		cin >> present[l][1];
+	}
+	cout << "Here is the students and if they are present:\n";
+	for (l = 0; l < numberStudents; l++)
+	{
+		cout << present[l][0] << ":" << present[l][1] << endl;
+
 	}
 	colorChanger(15);
 	cout << "Is this Class 1 or Class 2? (Please enter the number)\n";
@@ -361,7 +377,7 @@ int inputChecker(int input)
 	cin >> input;
 	colorChanger(14);
 	cout << "\n Status of input(0 means success and 1 means improper input): " << cin.fail() << endl;	
-while (cin.fail())
+	while (cin.fail())
 	{
 		colorChanger(10);
 		cin >> input;
@@ -416,7 +432,10 @@ bool inputChecker(bool input)
 }
 char inputChecker(char input)
 {
-	cin >> input;
+	char inputWord[100];
+	//cin.ignore();
+	cin.getline(inputWord,100);
+	input=inputWord[0];
 	colorChanger(14);
 	cout << "\n Status of input(0 means success and 1 means improper input): " << cin.fail() << endl;
 	while (cin.fail())
