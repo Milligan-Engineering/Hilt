@@ -9,8 +9,21 @@
 #include<fstream>
 #include<Windows.h>
 using namespace std;
+struct studentInfo
+{
+	char name[100];
+	char id[100];
+	bool presence;
+};
+class classInfo
+{
+public:
+	char name[100];
+	char term[100];
+	void ingest();
+};
 //Declaration of Variables
-//string /*className,*/ assignmentName, fileDirectory, /*termName,*/ classFileName;
+//string /*currentClass.name,*/ assignmentName, fileDirectory, /*currentClass.term,*/ classFileName;
 int numberStudents, numberAssignments, totalAssignments, fileLocation, classIndication;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
 char userInputNames, userInputClass,userInputAssignment, userInputCalc,UserInputDir, userInputSearch;//Variables for single character user inputs
 //Declartion of a C-Strings
@@ -57,11 +70,11 @@ int main()
 	Likely will not last longterm or will be moved to more approriate part of the program. 
 	This feature could be reworked for checking to make sure that complete set of assignments have been turned-in/scanned at the end of the year,
 	but is unnessacary to the current proposed functionality of the program.  Any thoughts?*/
-	colorChanger(15);
-	cout << "What term are we in? Use dashes or underlines in place of spaces\n";
+//	colorChanger(15);
+//	cout << "What term are we in? Use dashes or underlines in place of spaces\n";
 	colorChanger(10);
 	//cin >> termName;//Will hopefuully be embedded into class list files.
-	cin.getline(termName, 1000000);
+	//cin.getline(termName, 1000000);
 	do {
 		colorChanger(15);
 		cout << "How many students are in this class? \n(Numbers greater than 100 WILL break the program with the current class list, you can edit Class.txt to up the limit and will loop this input step until a number less than 100 is entered.)\n";
@@ -71,7 +84,7 @@ int main()
 	} while (numberStudents > 100);
 	colorChanger(15);
 	cout << "Would you like to get an estimate for the amount of files you will have at the end of the semester?\n Type y for yes or any other letter for no\n";
-	//cin >> userInputCalc;
+	cin >> userInputCalc;
 	colorChanger(10);
 	userInputCalc = inputChecker(userInputCalc);
 	userInputCalc = tolower(userInputCalc);
@@ -146,13 +159,15 @@ int main()
 	}
 	//Below are loops for the user to confirm the name of the class and the assignment
 	//className = confirmer("class", className);
-	colorChanger(15);
-	cout << "Class Name please? Use return to stop input\n";
-	cout << "Class name:";
+	//colorChanger(15);
+	//cout << "Class Name please? Use return to stop input\n";
+	//cout << "Class name:";
 	int testStorage[100];
-	colorChanger(10);
-	cin.ignore();
-	cin.getline(className,100);
+	//colorChanger(10);
+	//cin.ignore();
+	//cin.getline(className,100);
+	classInfo currentClass;
+	currentClass.ingest();
 	strcpy_s(classFileName, "test.csv");
 	ifstream classFile;
 	classFile.open("Class.txt");
@@ -210,6 +225,7 @@ int main()
 		cin >> userInputSearch;
 		//cin.ignore();
 	}
+	/* Will be reimplemented in... adds a lot of time to debug right now, will rewrite to be less instrusive
 	for (l = 0; l < numberStudents; l++)//injests whether a student was present or not.
 	{
 		cout << "What is the students number\n";
@@ -222,7 +238,7 @@ int main()
 	{
 		cout << present[l][0] << ":" << present[l][1] << endl;
 
-	}
+	}*/
 	colorChanger(15);
 	cout << "Is this Class 1 or Class 2? (Please enter the number)\n";
 	//cin >> classIndication;
@@ -231,7 +247,7 @@ int main()
 	strcpy_s(assignmentName,confirmer("assignment", assignmentName).c_str());
 	//Final output.
 	colorChanger(15);
-	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << className << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
+	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << currentClass.name << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
 	//I am just outputting to the console for now, but this will be changed to rename the files
 	colorChanger(15);
 	cout << "Here are the file names:\n";
@@ -249,9 +265,9 @@ int main()
 			string fileDirectoryString = fileDirectory;
 			for (int i = 0; i < MAX_STUDENTS && i < numberStudents; i++)
 			{
-				classOneFiles[i] = fileDirectoryString + "\\" + className + "-" + termName + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
+				classOneFiles[i] = fileDirectoryString + "\\" + currentClass.name + "-" + currentClass.term + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
 				cout << classOneFiles[i];
-				newFileName << fileDirectoryString << "\\" << className << "-" << termName << "-" << assignmentName << "-" << studentName[i] << ".fileExtension\n";//Add what term it is
+				newFileName << fileDirectoryString << "\\" << currentClass.name << "-" << currentClass.term << "-" << assignmentName << "-" << studentName[i] << ".fileExtension\n";//Add what term it is
 				cout << classOneFiles[i] << endl;
 			}
 			newFileName.close();
@@ -262,9 +278,9 @@ int main()
 			string fileDirectoryString = fileDirectory;
 			for (int i = 0; i < MAX_STUDENTS && i < numberStudents; i++)
 			{
-				classTwoFiles[i] = fileDirectoryString + "\\" + className + "-" + termName + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
+				classTwoFiles[i] = fileDirectoryString + "\\" + currentClass.name + "-" + currentClass.term + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
 				cout << classOneFiles[i];
-				newFileName << fileDirectoryString << "\\" << className << "-" << termName << "-" << assignmentName << "-" << studentName[i] << ".fileExtension\n";//Add what term it is
+				newFileName << fileDirectoryString << "\\" << currentClass.name << "-" << currentClass.term << "-" << assignmentName << "-" << studentName[i] << ".fileExtension\n";//Add what term it is
 				cout << classTwoFiles[i] << endl;
 			}
 			newFileName.close();
@@ -478,6 +494,15 @@ void arraySearch(string inputArray[], int sizeArray,char searchTerm[], int index
 			j++;
 		}
 	}
+}
+void classInfo::ingest()
+{
+	cout << "What is the class name?  Use enter to finish entry\n";
+	cin.ignore();
+	cin.get(name,100);
+	cout << "What term is this? Use enter to finish entry\n";
+	cin.ignore();
+	cin.getline(term, 100);
 }
 //The rest of the arraySearches will be implemented when further validated. 
 /*void arraySearch(int inputArray[], int sizeArray, int searchTerm)
