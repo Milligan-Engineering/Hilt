@@ -5,23 +5,22 @@
 //Description: A tool to allow batch labelling of files in directory
 //Version 0.8.3
 //Last Changed: 4/9/2020
-#include<iostream>
-#include<fstream>
-#include<Windows.h>
-using namespace std;
+#include "stdafx.h"
+#include "classInfo.h"
 struct studentInfo
 {
 	char name[100];
 	char id[100];
 	bool presence;
 };
-class classInfo
-{
-public:
-	char name[100];
-	char term[100];
-	void ingest();
-};
+//class classInfo
+//{
+//public:
+//	classInfo();
+//	char name[100];
+//	char term[100];
+//	void ingest();
+//};
 //Declaration of Variables
 //string /*currentClass.name,*/ assignmentName, fileDirectory, /*currentClass.term,*/ classFileName;
 int numberStudents, numberAssignments, totalAssignments, fileLocation, classIndication;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
@@ -495,7 +494,7 @@ void arraySearch(string inputArray[], int sizeArray,char searchTerm[], int index
 		}
 	}
 }
-void classInfo::ingest()
+/*void classInfo::ingest()
 {
 	cout << "What is the class name?  Use enter to finish entry\n";
 	cin.ignore();
@@ -503,7 +502,7 @@ void classInfo::ingest()
 	cout << "What term is this? Use enter to finish entry\n";
 	cin.ignore();
 	cin.getline(term, 100);
-}
+}*/
 //The rest of the arraySearches will be implemented when further validated. 
 /*void arraySearch(int inputArray[], int sizeArray, int searchTerm)
 {
