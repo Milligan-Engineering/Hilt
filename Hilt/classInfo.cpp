@@ -14,3 +14,20 @@ void classInfo::ingest()
 	cin.ignore();
 	cin.getline(term, 100);
 };
+char* classInfo::getName()
+{
+	return name;
+};
+void classInfo::setName(char newName[], int arraySize)
+{
+	strcpy(name, newName);
+
+};
+char* classInfo::getTerm()
+{
+	return term;
+}
+void classInfo::setTerm(char newTerm[], int arraySize)
+{
+	strcpy(name, newTerm);
+};
