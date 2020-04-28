@@ -4,9 +4,9 @@ class classInfo
 public:
 	classInfo();
 	void ingest();
-	char* getName();
+	const char* getName();
 	void setName(char newName[],int arraySize);
-	char* getTerm();
+	const char* getTerm();
 	void setTerm(char newTerm[],int arraySize);
 private:
 	char name[100];
