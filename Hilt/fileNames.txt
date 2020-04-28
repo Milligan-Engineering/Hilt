@@ -1,10 +1,5 @@
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-Willie.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-Banjo.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-Roanie.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-a.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-about.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-all.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-also.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-and.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-as.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-at.fileExtension
+class.txt\ENG221-S20-Exam01-Willie.fileExtension
+class.txt\ENG221-S20-Exam01-Banjo.fileExtension
+class.txt\ENG221-S20-Exam01-Roanie.fileExtension
+class.txt\ENG221-S20-Exam01-a.fileExtension
+class.txt\ENG221-S20-Exam01-about.fileExtension
