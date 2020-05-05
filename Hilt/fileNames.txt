@@ -1,10 +1,5 @@
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-Willie.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-Banjo.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-Roanie.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-a.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-about.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-all.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-also.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-and.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-as.fileExtension
-F:\scannedFiles\EEng221-Spring 2020-EENG 221-at.fileExtension
+\1-1-11-Willie.fileExtension
+\1-1-11-Banjo.fileExtension
+\1-1-11-Roanie.fileExtension
+\1-1-11-a.fileExtension
+\1-1-11-about.fileExtension
