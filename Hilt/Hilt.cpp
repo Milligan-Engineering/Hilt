@@ -3,30 +3,34 @@
 //Email Address: blkelly@my.milligan.edu
 //Term Project
 //Description: A tool to allow batch labelling of files in directory
-//Version 0.8.1
-//Last Changed: 3/25/2020
-#include <iostream>
-#include<fstream>
-#include<Windows.h>
-using namespace std;
-//Declaration of Variables
-string /*className,*/ assignmentName, fileDirectory, /*termName,*/ classFileName;
+//Version 0.9.0
+//Last Changed: 4/28/2020
+#include "stdafx.h"
+#include "classInfo.h"
+struct studentInfo
+{
+	char name[100];
+	char id[100];
+	bool presence;
+};
 int numberStudents, numberAssignments, totalAssignments, fileLocation, classIndication;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
-char userInputNames, userInputClass,userInputAssignment, userInputCalc,UserInputDir;//Variables for single character user inputs
+char userInputNames, userInputClass,userInputAssignment, userInputCalc,UserInputDir, userInputSearch,userInputPresence;//Variables for single character user inputs
 //Declartion of a C-Strings
-char className[100]; char termName[100];
+char className[100]; char termName[100]; char assignmentName[100]; char fileDirectory[100]; char classFileName[100];char searchTerm[100];
+//string searchTerm;
 //Declaration of Constants
-int const MAX_STUDENTS = 5000;//Originally 6, using 40 to allow testing of larger classes
+int const MAX_STUDENTS = 100;//Originally 6, using 40 to allow testing of larger classes
 //Declaration of arrays
 string studentName[MAX_STUDENTS];//Six is a placeholder value as it is the number of students EENG 221
 string classOne[MAX_STUDENTS];//Sample classes(currently not used as studentName is handling its duties at this point, but will be used within the next version or two
 string classTwo[MAX_STUDENTS];
+int present[MAX_STUDENTS][1];//The 'x' axis is the students number and the 'y' axis is whether they were there or not.
 string classOneFiles[MAX_STUDENTS] = {"Q12_001", "Q12_002","Q12_003", "Q12_004" "Q12_005", "Q12_006","Q12_007" };//Array with files to rename.
 //Since I am currently just renaming the array elements without using the data contained in a meaningful way, I simply populated classTwofiles with random strings(the synonyms of amazing)
 string classTwoFiles[MAX_STUDENTS] = { "astonishing", "astounding", "blindsiding", "dumbfounding", "eye-opening", "flabbergasting", "jarring", "jaw-dropping", "jolting", "shocking", "startling", "stunning", "stupefying", "surprising" };//Will enter actual represenative strings after confirming the structure
 //Declartion of functions
 void studentNameInput();//Allows for the user to input student names.  
-string validator(string input, string desiredInput);
+//string validator(string input, string desiredInput);
 //Precondition: String you want to check and desired string/characters to compare against
 //Postcondition: The function compares the two and returns the user input when they are the same as a string
 string inputChecker(string input);
@@ -39,8 +43,10 @@ char inputChecker(char input);
 void colorChanger(int colorNumber);
 //Precondition: Place the number of the color you want the following text to be.
 //Postconditon:The output color is changed for the following text until it is changed again.
-
-string confirmer(string nameOfInput,string userInput);
+void arraySearch(string inputArray[], int sizeArray, char searchTerm[], int indexStorageArray[], int indexStorageArraySize);
+//Precondition: Put in an array to search for a given search term as well as an array to store the indexes that match the search term given.
+//Postcondition: Any index where the element matches the given search term is stored in the indexSotrageArray.
+string confirmer(string nameOfInput,char userInput[]);
 //Precondition: What input you need to the user to confirm and what it is called in the program, where the userInput is a string and the name of the variable with type string
 //Postcondition: Returns the confirmed user input as a string.
 int main()
@@ -49,24 +55,17 @@ int main()
 	colorChanger(11);
 	cout << "Welcome to H.I.L.T!\nHere is the color code quickly: This blue is for the greeting message, white is for the rest of the computer outputs,\ngreen is user input, yellow is a status notice, and red is for errors\n";
 	cout << "To start we are going to have you input a few basic pieces of information:\n";
-	/*This for the calculation part of the assignment.  
-	Likely will not last longterm or will be moved to more approriate part of the program. 
-	This feature could be reworked for checking to make sure that complete set of assignments have been turned-in/scanned at the end of the year,
-	but is unnessacary to the current proposed functionality of the program.  Any thoughts?*/
-	colorChanger(15);
-	cout << "What term are we in? Use dashes or underlines in place of spaces\n";
 	colorChanger(10);
-	//cin >> termName;//Will hopefuully be embedded into class list files.
-	cin.getline(termName, 1000000);
-	colorChanger(15);
-	cout << "How many students are in this class? \n(Numbers greater than 100 WILL break the program with the current class list, you can edit Class.txt to up the limit)\n";
-	//cin >> numberStudents;
-	colorChanger(10);
-	numberStudents = inputChecker(numberStudents);
+	do {
+		colorChanger(15);
+		cout << "How many students are in this class? \n(Numbers greater than 100 WILL break the program with the current class list, you can edit Class.txt to up the limit and will loop this input step until a number less than 100 is entered.)\n";
+		colorChanger(10);
+		numberStudents = inputChecker(numberStudents);
+	} while (numberStudents > 100);
 	colorChanger(15);
 	cout << "Would you like to get an estimate for the amount of files you will have at the end of the semester?\n Type y for yes or any other letter for no\n";
-	//cin >> userInputCalc;
 	colorChanger(10);
+	cin.ignore();
 	userInputCalc = inputChecker(userInputCalc);
 	userInputCalc = tolower(userInputCalc);
 	if (userInputCalc == 'y')
@@ -79,24 +78,6 @@ int main()
 		colorChanger(15);
 		cout << "There should be a total of " << totalAssignments << " files this semester for this class.\n -------------------------------------------- \n";
 	}
-	//While loop to populate array with student names
-
-	/*This is the section for the user to input the basic information for the labeler.  Text entry will likely not be the ideal input system, 
-	especially for file directory and class names, but should be relatively simple to get working and/or replace*/
-	//User inputs.  File directory will possibly be reworked into original file directory and the option to move the files while renaming them
-	/*cout << "Now is the time to enter student names into the class list:\n";
-	do
-	{
-		studentNameInput();
-		cout << "\n###################################\n Student Names:\n";//Adds a dividing line from the last user input and the computers output
-		for (int k = 0; k < MAX_STUDENTS && k < numberStudents; k++)
-		{
-			cout << studentName[k] << "\n";
-		}
-		cout << "Are these names correct?\n";
-		cin >> userInputNames;
-		userInputNames = tolower(userInputNames);
-	} while (userInputNames != 'y');*/
 	int l = 0;
 	do {
 		if (l > 0)
@@ -120,31 +101,27 @@ int main()
 		case 1:
 		{
 			colorChanger(15);
-			fileDirectory = "F:\\scannedFiles";
+			strcpy_s(fileDirectory, "F:\\scannedFiles");
 			break;
 		}
 		case 2:
 		{
 			colorChanger(15);
-			fileDirectory = "C:\\Documents";
+			strcpy_s(fileDirectory, "C:\\Documents");
 			break;
 		}
 		case 3:
 			colorChanger(15);
 			cout << "What file directory do you want to read and write from?\n";
 			colorChanger(10);
-			cin >> fileDirectory;
-			validator(fileDirectory, "test");
+			cin.ignore();
+			cin.getline(fileDirectory, 100);
+			break;
 	}
-	//Below are loops for the user to confirm the name of the class and the assignment
-	//className = confirmer("class", className);
-	colorChanger(15);
-	cout << "Class Name please? Use return to stop input\n";
-	cout << "Class name:";
-	colorChanger(10);
-	cin.ignore();
-	cin.getline(className,100);
-	classFileName =  "test.csv";
+	int testStorage[100];
+	classInfo currentClass;
+	currentClass.ingest();
+	strcpy_s(classFileName, "test.csv");
 	ifstream classFile;
 	classFile.open("Class.txt");
 	if (classFile.fail())
@@ -161,15 +138,66 @@ int main()
 		count++;
 	}
 	classFile.close();
+	int arrayMatches = 0;
+	colorChanger(15);
+	//This search is a little buggy right now, will clean up
+	cout << "Would you like to search for a student in this class?  Use y to indicate yes or another character to not search\n";
+	userInputSearch = inputChecker(userInputSearch);
+	userInputSearch = tolower(userInputSearch);
+	while (userInputSearch == 'y')
+	{
+		cout << "What is the student's name?\n";
+		cin.ignore();
+		cin.getline(searchTerm, 100,'\n');
+		arraySearch(studentName, 10, searchTerm, testStorage, 10);
+		arrayMatches = 0;
+		for (int p = 0; p < 10; p++)
+		{
+			if (testStorage[p] != -1)
+			{
+				cout << "Index #:" << testStorage[p]<<"\n";
+				arrayMatches++;
+			}
+			if (p == 9)
+			{
+				if (arrayMatches != 0)
+				{
+					cout << "There were " << arrayMatches << " matches\n";
+				}
+				else
+				{
+					cout << "There were no matches\n";
+				}
+			}
+
+		}
+		cout << "Would you like to find another student? Any other input than y or Y will exit this routine\n";
+	cin >> userInputSearch;
+	}
+//	cout << "Now is the time that you can indicate whether a student is here or not\n Were any students missing?";
+	//userInputPresence = inputChecker(userInputPresence);
+	//This should be ready for Monday, working on finish it by Thursday
+	/*while (userInputPresence = 'y')
+	{
+		cout << "What is the name of the student?";
+		string searchTerm;
+		for (int i = 0, bool found; i > numberStudents || found != 1; i++)
+		{
+			if (studentName[i] == searchTerm)
+			{
+				found = true;
+				present = 0;
+			}
+		}
+	}*/
 	colorChanger(15);
 	cout << "Is this Class 1 or Class 2? (Please enter the number)\n";
-	//cin >> classIndication;
 	colorChanger(10);
 	classIndication = inputChecker(classIndication);
-	assignmentName = confirmer("assignment", assignmentName);
+	strcpy_s(assignmentName,confirmer("assignment", assignmentName).c_str());
 	//Final output.
 	colorChanger(15);
-	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << className << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
+	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << currentClass.getName() << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
 	//I am just outputting to the console for now, but this will be changed to rename the files
 	colorChanger(15);
 	cout << "Here are the file names:\n";
@@ -184,11 +212,12 @@ int main()
 	{
 		case 1:
 		{
+			string fileDirectoryString = fileDirectory;
 			for (int i = 0; i < MAX_STUDENTS && i < numberStudents; i++)
 			{
-				classOneFiles[i] = fileDirectory + "\\" + className + "-" + termName +"-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
+				classOneFiles[i] = fileDirectoryString + "\\" + currentClass.getName() + "-" + currentClass.getTerm() + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
 				cout << classOneFiles[i];
-				newFileName << fileDirectory + "\\" + className + "-" + termName + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
+				newFileName << fileDirectoryString << "\\" << currentClass.getName() << "-" << currentClass.getTerm() << "-" << assignmentName << "-" << studentName[i] << ".fileExtension\n";//Add what term it is
 				cout << classOneFiles[i] << endl;
 			}
 			newFileName.close();
@@ -196,11 +225,12 @@ int main()
 		}
 		case 2:
 		{
+			string fileDirectoryString = fileDirectory;
 			for (int i = 0; i < MAX_STUDENTS && i < numberStudents; i++)
 			{
-				classTwoFiles[i] = fileDirectory + "\\" + className + "-" + termName + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
+				classTwoFiles[i] = fileDirectoryString + "\\" + currentClass.getName() + "-" + currentClass.getTerm() + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
 				cout << classOneFiles[i];
-				newFileName << fileDirectory + "\\" + className + "-" + termName + "-" + assignmentName + "-" + studentName[i] + ".fileExtension\n";//Add what term it is
+				newFileName << fileDirectoryString << "\\" << currentClass.getName() << "-" << currentClass.getTerm() << "-" << assignmentName << "-" << studentName[i] << ".fileExtension\n";//Add what term it is
 				cout << classTwoFiles[i] << endl;
 			}
 			newFileName.close();
@@ -212,45 +242,17 @@ int main()
 
 }
 //Function Definition
-void studentNameInput() //Allows for student name inputs to be implemented outside of the main function
+string confirmer(string nameOfInput, char userInput[])
 {
-	for (int j = 0; j < MAX_STUDENTS && j < numberStudents; j++)
-	{
-		if (j == 0)
-		{
-			colorChanger(15);
-			cout << "What is the first student's name?\n";
-			colorChanger(10);
-			cin >> studentName[j];
-		}
-		else
-		{
-			colorChanger(15);
-			cout << "What is the next students name?\n";
-			colorChanger(10);
-			cin >> studentName[j];
-		}
-
-	}return;
-}
-string validator(string input, string desiredInput)
-{
-	while (input != desiredInput)
-	{
-		cout << "Sorry, but " << input << "is not a valid input.  Please try again:\n";
-		cin >> input;
-	}
-	return(input);
-}
-string confirmer(string nameOfInput, string userInput)
-{
+	string stringOuput;
 	char userConfirmation;
 	do
 	{
 		colorChanger(15);
 		cout << "Please enter your desired " << nameOfInput << " name (using dashes or underscores for spaces.)\n";
 		colorChanger(10);
-		cin >> userInput;
+		cin.ignore();
+		cin.getline(userInput,100);
 		colorChanger(15);
 		cout << "Is this the correct " << nameOfInput << " name?\n";
 		colorChanger(10); 
@@ -259,8 +261,10 @@ string confirmer(string nameOfInput, string userInput)
 		cin >> userConfirmation;
 		userConfirmation = tolower(userConfirmation);
 	} while (userConfirmation != 'y');
-	return userInput;
+	string stringOutput = string(userInput);
+	return stringOutput;
 }
+//Not yet functional nor needed yet. Probably won't be utilized in this version
 void csvParser(string fileName)
 {
 	char currentChar;
@@ -288,6 +292,7 @@ void csvParser(string fileName)
 }
 string inputChecker(string input)
 {
+	colorChanger(10);
 	cin >> input;
 	colorChanger(14);
 	cout << "\n Status of input(0 means success and 1 means improper input): "<< cin.fail() << endl;
@@ -295,7 +300,6 @@ string inputChecker(string input)
 	{
 		colorChanger(10);
 		cin >> input;
-		//cout << cin.fail() << endl;
 		cin.clear();
 		cin.ignore();
 		colorChanger(12);
@@ -307,14 +311,14 @@ string inputChecker(string input)
 }
 int inputChecker(int input)
 {
+	colorChanger(10);
 	cin >> input;
 	colorChanger(14);
 	cout << "\n Status of input(0 means success and 1 means improper input): " << cin.fail() << endl;	
-while (cin.fail())
+	while (cin.fail())
 	{
 		colorChanger(10);
 		cin >> input;
-		//cout << cin.fail() << endl;
 		cin.clear();
 		cin.ignore();
 		colorChanger(12);
@@ -327,13 +331,13 @@ while (cin.fail())
 
 double inputChecker(double input)
 {
+	colorChanger(10);
 	cin >> input;
 	cout << "\n Status of input(0 means success and 1 means improper input): " << cin.fail() << endl;
 	while (cin.fail())
 	{
 		colorChanger(10);
 		cin >> input;
-		//cout << cin.fail() << endl;
 		cin.clear();
 		cin.ignore();
 		colorChanger(12);
@@ -346,6 +350,7 @@ double inputChecker(double input)
 
 bool inputChecker(bool input)
 {
+	colorChanger(10);
 	cin >> input;
 	colorChanger(14);
 	cout << "\n Status of input(0 means success and 1 means improper input): " << cin.fail() << endl;
@@ -353,7 +358,6 @@ bool inputChecker(bool input)
 	{
 		colorChanger(10);
 		cin >> input;
-		//cout << cin.fail() << endl;
 		cin.clear();
 		cin.ignore();
 		colorChanger(12);
@@ -365,14 +369,16 @@ bool inputChecker(bool input)
 }
 char inputChecker(char input)
 {
-	cin >> input;
+	colorChanger(10);
+	char inputWord[100];
+	cin.getline(inputWord,100);
+	input=inputWord[0];
 	colorChanger(14);
 	cout << "\n Status of input(0 means success and 1 means improper input): " << cin.fail() << endl;
 	while (cin.fail())
 	{
 		colorChanger(10);
 		cin >> input;
-		//cout << cin.fail() << endl;
 		cin.clear();
 		cin.ignore();
 		colorChanger(12);
@@ -386,3 +392,77 @@ void colorChanger(int colorNumber)
 {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorNumber);
 }
+void arraySearch(string inputArray[], int sizeArray,char searchTerm[], int indexStorageArray[],int indexStorageArraySize)
+{
+	if (sizeArray > indexStorageArraySize)
+	{
+		colorChanger(12);
+		cout << "Sorry this array is to big to be searched and stored safely in the given storage array, please try again.";
+		exit(0);
+	}
+	int j = 0;
+	for (int i = 0; i < sizeArray; i++) 
+	{
+		if (inputArray[i] == searchTerm)
+		{
+			indexStorageArray[j] = i;
+			j++;
+		}
+		else
+		{
+			indexStorageArray[j] = -1;
+			j++;
+		}
+	}
+}
+//The rest of the arraySearches will be implemented when further validated. 
+/*void arraySearch(int inputArray[], int sizeArray, int searchTerm)
+{
+	int j = 0;
+	for (int i = 0; i < sizeArray; i++)
+	{
+		if (inputArray[i] == searchTerm)
+		{
+			indexes[j] = i;
+			j++;
+		}
+	}
+}
+void arraySearch(double inputArray[], int sizeArray, double searchTerm)
+	{
+		int j = 0;
+		for (int i = 0; i < sizeArray; i++)
+		{
+			if (inputArray[i] == searchTerm)
+			{
+				indexes[j] = i;
+				j++;
+			}
+		}
+	}
+void arraySearch(float inputArray[], int sizeArray, float searchTerm)
+{
+	int j = 0;
+	for (int i = 0; i < sizeArray; i++)
+	{
+		if (inputArray[i] == searchTerm)
+		{
+			indexes[j] = i;
+			j++;
+		}
+	}
+}
+void arraySearch(bool inputArray[], int sizeArray, bool searchTerm)
+{
+	int j = 0;
+	for (int i = 0; i < sizeArray; i++)
+	{
+		if (inputArray[i] == searchTerm)
+		{
+			indexes[j] = i;
+			j++;
+		}
+	}
+}
+
+*/
