@@ -3,19 +3,22 @@
 //Email Address: blkelly@my.milligan.edu
 //Term Project
 //Description: A tool to allow batch labelling of files in directory
-//Version 0.9.0
-//Last Changed: 4/28/2020
+//Version 1.0.0
+//Last Changed: 5/5/2020
 #include "stdafx.h"
 #include "classInfo.h"
+//Structure Declarations
 struct studentInfo
 {
 	char name[100];
 	char id[100];
-	bool presence;
+	bool presence = true;
 };
+
+//Declaration of Variables
 int numberStudents, numberAssignments, totalAssignments, fileLocation, classIndication;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
 char userInputNames, userInputClass,userInputAssignment, userInputCalc,UserInputDir, userInputSearch,userInputPresence;//Variables for single character user inputs
-//Declartion of a C-Strings
+//Declaration of a C-Strings
 char className[100]; char termName[100]; char assignmentName[100]; char fileDirectory[100]; char classFileName[100];char searchTerm[100];
 //string searchTerm;
 //Declaration of Constants
@@ -24,10 +27,11 @@ int const MAX_STUDENTS = 100;//Originally 6, using 40 to allow testing of larger
 string studentName[MAX_STUDENTS];//Six is a placeholder value as it is the number of students EENG 221
 string classOne[MAX_STUDENTS];//Sample classes(currently not used as studentName is handling its duties at this point, but will be used within the next version or two
 string classTwo[MAX_STUDENTS];
-int present[MAX_STUDENTS][1];//The 'x' axis is the students number and the 'y' axis is whether they were there or not.
+studentInfo students[MAX_STUDENTS];
 string classOneFiles[MAX_STUDENTS] = {"Q12_001", "Q12_002","Q12_003", "Q12_004" "Q12_005", "Q12_006","Q12_007" };//Array with files to rename.
 //Since I am currently just renaming the array elements without using the data contained in a meaningful way, I simply populated classTwofiles with random strings(the synonyms of amazing)
 string classTwoFiles[MAX_STUDENTS] = { "astonishing", "astounding", "blindsiding", "dumbfounding", "eye-opening", "flabbergasting", "jarring", "jaw-dropping", "jolting", "shocking", "startling", "stunning", "stupefying", "surprising" };//Will enter actual represenative strings after confirming the structure
+
 //Declartion of functions
 void studentNameInput();//Allows for the user to input student names.  
 //string validator(string input, string desiredInput);
@@ -130,11 +134,11 @@ int main()
 		exit(1);
 	}
 	int count = 0;
-	string next;
-	while (classFile >> next)
+	char next[100];
+	while (classFile >>next)
 	{
 		
-		studentName[count] = next;
+		strcpy_s(students[count].name, next);
 		count++;
 	}
 	classFile.close();
@@ -151,14 +155,14 @@ int main()
 		cin.getline(searchTerm, 100,'\n');
 		arraySearch(studentName, 10, searchTerm, testStorage, 10);
 		arrayMatches = 0;
-		for (int p = 0; p < 10; p++)
+		for (int p = 0; p <numberStudents; p++)
 		{
 			if (testStorage[p] != -1)
 			{
 				cout << "Index #:" << testStorage[p]<<"\n";
 				arrayMatches++;
 			}
-			if (p == 9)
+			if (p == numberStudents-1)
 			{
 				if (arrayMatches != 0)
 				{
@@ -172,24 +176,24 @@ int main()
 
 		}
 		cout << "Would you like to find another student? Any other input than y or Y will exit this routine\n";
-	cin >> userInputSearch;
+		cin >> userInputSearch;
 	}
-//	cout << "Now is the time that you can indicate whether a student is here or not\n Were any students missing?";
-	//userInputPresence = inputChecker(userInputPresence);
-	//This should be ready for Monday, working on finish it by Thursday
-	/*while (userInputPresence = 'y')
+	cout << "Now is the time that you can indicate whether a student is here or not\n Were any students missing?";
+	userInputPresence = inputChecker(userInputPresence);
+	while (userInputPresence == 'y')
 	{
+		bool found=false;
 		cout << "What is the name of the student?";
-		string searchTerm;
-		for (int i = 0, bool found; i > numberStudents || found != 1; i++)
+		for (int i = 0; i > numberStudents || found != 1; i++)
 		{
-			if (studentName[i] == searchTerm)
+			if (strncmp(students[i].name, searchTerm,100) == 0)
 			{
 				found = true;
-				present = 0;
+				students[i].presence = false;
+				cout << students[i].name << "  " << students[i].presence;
 			}
 		}
-	}*/
+	}
 	colorChanger(15);
 	cout << "Is this Class 1 or Class 2? (Please enter the number)\n";
 	colorChanger(10);
