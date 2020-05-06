@@ -125,7 +125,7 @@ int main()
 	int testStorage[100];
 	classInfo currentClass;
 	currentClass.ingest();
-	strcpy_s(classFileName, "test.csv");
+	//strcpy_s(classFileName, "test.csv");//Not currently utilized
 	ifstream classFile;
 	classFile.open("Class.txt");
 	if (classFile.fail())
