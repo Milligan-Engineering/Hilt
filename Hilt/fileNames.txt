@@ -23,3 +23,10 @@ F:\scannedFiles\EENG221-Spring2020-FinalPresentation-first.fileExtension
 F:\scannedFiles\EENG221-Spring2020-FinalPresentation-for.fileExtension
 F:\scannedFiles\EENG221-Spring2020-FinalPresentation-from.fileExtension
 F:\scannedFiles\EENG221-Spring2020-FinalPresentation-get.fileExtension
+=======
+class.txt\ENG221-S20-Exam01-Willie.fileExtension
+class.txt\ENG221-S20-Exam01-Banjo.fileExtension
+class.txt\ENG221-S20-Exam01-Roanie.fileExtension
+class.txt\ENG221-S20-Exam01-a.fileExtension
+class.txt\ENG221-S20-Exam01-about.fileExtension
+
