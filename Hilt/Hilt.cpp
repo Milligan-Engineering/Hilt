@@ -54,6 +54,8 @@ string confirmer(string nameOfInput,char userInput[]);
 int main()
 {
 	//Greeting Message.  Will likely be expanded to add some basic rules/instructions
+	colorChanger(14);
+	cout << "HHHHHHHHH     HHHHHHHHH          _          LLLLLLLLLLL                     TTTTTTTTTTTTTTTTTTTTTTT        \nH:::::::H     H:::::::H         (_)         L:::::::::L                     T:::::::::::::::::::::T       \nH:::::::H     H:::::::H         |_|         L:::::::::L                     T:::::::::::::::::::::T       \nHH::::::H     H::::::HH         |_|         LL:::::::LL                     T:::::TT:::::::TT:::::T        \n  H:::::H     H:::::H           |_|           L:::::L                       TTTTTT  T:::::T  TTTTTT        \n  H:::::H     H:::::H           |_|           L:::::L                               T:::::T                \n  H::::::HHHHH::::::H           |_|           L:::::L                               T:::::T                \n  H:::::::::::::::::H       o=========o       L:::::L                               T:::::T                \n  H:::::::::::::::::H           | |           L:::::L                               T:::::T                \n  H::::::HHHHH::::::H           | |           L:::::L                               T:::::T                \n  H:::::H     H:::::H           | |           L:::::L                               T:::::T                \n  H:::::H     H:::::H           | |           L:::::L         LLLLLL                T:::::T                \nHH::::::H     H::::::HH         | |         LL:::::::LLLLLLLLL:::::L              TT:::::::TT              \nH:::::::H     H:::::::H ......  | |  ...... L::::::::::::::::::::::L ......       T:::::::::T ...... \nH:::::::H     H:::::::H .::::.  | |  .::::. L::::::::::::::::::::::L .::::.       T:::::::::T .::::. \nHHHHHHHHH     HHHHHHHHH ......  \\ /  ...... LLLLLLLLLLLLLLLLLLLLLLLL ......       TTTTTTTTTTT ...... \n";
 	colorChanger(11);
 	cout << "Welcome to H.I.L.T!\nHere is the color code quickly: This blue is for the greeting message, white is for the rest of the computer outputs,\ngreen is user input, yellow is a status notice, and red is for errors\n";
 	cout << "To start we are going to have you input a few basic pieces of information:\n";
@@ -152,16 +154,16 @@ int main()
 		colorChanger(10);
 		cin.getline(searchTerm, 100,'\n');
 		colorChanger(15);
-		arraySearch(studentName, 10, searchTerm, testStorage, 10);
+		arraySearch(studentName, numberStudents, searchTerm, testStorage, numberStudents);
 		arrayMatches = 0;
-		for (int p = 0; p < 10; p++)
+		for (int p = 0; p < (numberStudents); p++)
 		{
 			if (testStorage[p] != -1)
 			{
 				cout << "Index #:" << testStorage[p]<<"\n";
 				arrayMatches++;
 			}
-			if (p == 9)
+			if (p == (numberStudents-1))
 			{
 				if (arrayMatches != 0)
 				{
