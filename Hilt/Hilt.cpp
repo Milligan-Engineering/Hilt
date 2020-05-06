@@ -3,8 +3,8 @@
 //Email Address: blkelly@my.milligan.edu
 //Term Project
 //Description: A tool to allow batch labelling of files in directory
-//Version 0.9.0
-//Last Changed: 4/28/2020
+//Version 1.0.0(Final Presentation)
+//Last Changed: 5/5/2020
 #include "stdafx.h"
 #include "classInfo.h"
 struct studentInfo
@@ -13,14 +13,16 @@ struct studentInfo
 	char id[100];
 	bool presence;
 };
+string searchTermPresence;
 int numberStudents, numberAssignments, totalAssignments, fileLocation, classIndication;//fileDirectory is where the actual file is stored while fileLocation is to help build the menu
 char userInputNames, userInputClass,userInputAssignment, userInputCalc,UserInputDir, userInputSearch,userInputPresence;//Variables for single character user inputs
 //Declartion of a C-Strings
 char className[100]; char termName[100]; char assignmentName[100]; char fileDirectory[100]; char classFileName[100];char searchTerm[100];
 //string searchTerm;
 //Declaration of Constants
-int const MAX_STUDENTS = 100;//Originally 6, using 40 to allow testing of larger classes
+int const MAX_STUDENTS = 100;	
 //Declaration of arrays
+studentInfo studentsArray[MAX_STUDENTS];
 string studentName[MAX_STUDENTS];//Six is a placeholder value as it is the number of students EENG 221
 string classOne[MAX_STUDENTS];//Sample classes(currently not used as studentName is handling its duties at this point, but will be used within the next version or two
 string classTwo[MAX_STUDENTS];
@@ -52,6 +54,8 @@ string confirmer(string nameOfInput,char userInput[]);
 int main()
 {
 	//Greeting Message.  Will likely be expanded to add some basic rules/instructions
+	colorChanger(14);
+	cout << "HHHHHHHHH     HHHHHHHHH          _          LLLLLLLLLLL                     TTTTTTTTTTTTTTTTTTTTTTT        \nH:::::::H     H:::::::H         (_)         L:::::::::L                     T:::::::::::::::::::::T       \nH:::::::H     H:::::::H         |_|         L:::::::::L                     T:::::::::::::::::::::T       \nHH::::::H     H::::::HH         |_|         LL:::::::LL                     T:::::TT:::::::TT:::::T        \n  H:::::H     H:::::H           |_|           L:::::L                       TTTTTT  T:::::T  TTTTTT        \n  H:::::H     H:::::H           |_|           L:::::L                               T:::::T                \n  H::::::HHHHH::::::H           |_|           L:::::L                               T:::::T                \n  H:::::::::::::::::H       o=========o       L:::::L                               T:::::T                \n  H:::::::::::::::::H           | |           L:::::L                               T:::::T                \n  H::::::HHHHH::::::H           | |           L:::::L                               T:::::T                \n  H:::::H     H:::::H           | |           L:::::L                               T:::::T                \n  H:::::H     H:::::H           | |           L:::::L         LLLLLL                T:::::T                \nHH::::::H     H::::::HH         | |         LL:::::::LLLLLLLLL:::::L              TT:::::::TT              \nH:::::::H     H:::::::H ......  | |  ...... L::::::::::::::::::::::L ......       T:::::::::T ...... \nH:::::::H     H:::::::H .::::.  | |  .::::. L::::::::::::::::::::::L .::::.       T:::::::::T .::::. \nHHHHHHHHH     HHHHHHHHH ......  \\ /  ...... LLLLLLLLLLLLLLLLLLLLLLLL ......       TTTTTTTTTTT ...... \nSword from ASCII Art Archive\n";
 	colorChanger(11);
 	cout << "Welcome to H.I.L.T!\nHere is the color code quickly: This blue is for the greeting message, white is for the rest of the computer outputs,\ngreen is user input, yellow is a status notice, and red is for errors\n";
 	cout << "To start we are going to have you input a few basic pieces of information:\n";
@@ -121,7 +125,7 @@ int main()
 	int testStorage[100];
 	classInfo currentClass;
 	currentClass.ingest();
-	strcpy_s(classFileName, "test.csv");
+	//strcpy_s(classFileName, "test.csv");//Not currently utilized
 	ifstream classFile;
 	classFile.open("Class.txt");
 	if (classFile.fail())
@@ -140,25 +144,26 @@ int main()
 	classFile.close();
 	int arrayMatches = 0;
 	colorChanger(15);
-	//This search is a little buggy right now, will clean up
 	cout << "Would you like to search for a student in this class?  Use y to indicate yes or another character to not search\n";
 	userInputSearch = inputChecker(userInputSearch);
 	userInputSearch = tolower(userInputSearch);
 	while (userInputSearch == 'y')
 	{
+		colorChanger(15);
 		cout << "What is the student's name?\n";
-		cin.ignore();
+		colorChanger(10);
 		cin.getline(searchTerm, 100,'\n');
-		arraySearch(studentName, 10, searchTerm, testStorage, 10);
+		colorChanger(15);
+		arraySearch(studentName, numberStudents, searchTerm, testStorage, numberStudents);
 		arrayMatches = 0;
-		for (int p = 0; p < 10; p++)
+		for (int p = 0; p < (numberStudents); p++)
 		{
 			if (testStorage[p] != -1)
 			{
 				cout << "Index #:" << testStorage[p]<<"\n";
 				arrayMatches++;
 			}
-			if (p == 9)
+			if (p == (numberStudents-1))
 			{
 				if (arrayMatches != 0)
 				{
@@ -172,24 +177,32 @@ int main()
 
 		}
 		cout << "Would you like to find another student? Any other input than y or Y will exit this routine\n";
-	cin >> userInputSearch;
+		userInputSearch = inputChecker(userInputSearch);
+		userInputSearch = tolower(userInputSearch);
 	}
-//	cout << "Now is the time that you can indicate whether a student is here or not\n Were any students missing?";
-	//userInputPresence = inputChecker(userInputPresence);
-	//This should be ready for Monday, working on finish it by Thursday
-	/*while (userInputPresence = 'y')
+	colorChanger(15);
+	cout << "Now is the time that you can indicate whether a student is here or not\n Were any students missing?\n";
+	userInputPresence = inputChecker(userInputPresence);
+	userInputPresence = tolower(userInputPresence);
+	while (userInputPresence == 'y')
 	{
-		cout << "What is the name of the student?";
-		string searchTerm;
-		for (int i = 0, bool found; i > numberStudents || found != 1; i++)
+		colorChanger(15);
+		cout << "What is the name of the student?\n";
+		searchTermPresence = inputChecker(searchTermPresence);
+		cin.ignore();
+		for (int i = 0; i < numberStudents; i++)
 		{
-			if (studentName[i] == searchTerm)
+			if (studentsArray[i].name == searchTermPresence)
 			{
-				found = true;
-				present = 0;
+				studentsArray[i].presence = false;
 			}
+
 		}
-	}*/
+		colorChanger(15);
+		cout << "Are there any more missing students?\n";
+		userInputPresence = inputChecker(userInputPresence);
+		userInputPresence = tolower(userInputPresence);
+	}
 	colorChanger(15);
 	cout << "Is this Class 1 or Class 2? (Please enter the number)\n";
 	colorChanger(10);
@@ -198,7 +211,6 @@ int main()
 	//Final output.
 	colorChanger(15);
 	cout << "Thank you!\n All of the selected files will have this format:\n" << fileDirectory << "\\" << currentClass.getName() << "-" << assignmentName << "-firstName-lastName.fileExtension\n";
-	//I am just outputting to the console for now, but this will be changed to rename the files
 	colorChanger(15);
 	cout << "Here are the file names:\n";
 	ofstream newFileName;
